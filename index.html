@@ -266,7 +266,7 @@
 
 <div class="card">
   <div class="header">
-    <div class="badge">Comunicación interna</div>
+    <div class="badge">CIEMAT</div>
     <h1>Avistamiento de plagas</h1>
     <p>Rellena este formulario si has observado hormigas o cucarachas en tu dependencia.</p>
     <div class="privacy">
@@ -299,8 +299,12 @@
         <button type="button" class="chip" onclick="selectChip(this, 'Ambas')">
           Ambas
         </button>
+        <button type="button" class="chip" onclick="selectChip(this, 'Otros')">
+          Otros
+        </button>
       </div>
       <input type="hidden" id="plaga">
+      <input type="text" id="plaga-otros" placeholder="Especifica el tipo de plaga..." style="display:none; margin-top:10px;">
     </div>
 
     <div class="field">
@@ -360,11 +364,16 @@
     document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
     el.classList.add('active');
     document.getElementById('plaga').value = val;
+    const otrosInput = document.getElementById('plaga-otros');
+    otrosInput.style.display = val === 'Otros' ? 'block' : 'none';
+    if (val !== 'Otros') otrosInput.value = '';
   }
 
   function enviar() {
     const dependencia = document.getElementById('dependencia').value.trim();
-    const plaga = document.getElementById('plaga').value;
+    const plagaHidden = document.getElementById('plaga').value;
+    const plagaOtros = document.getElementById('plaga-otros').value.trim();
+    const plaga = plagaHidden === 'Otros' ? ('Otros: ' + plagaOtros) : plagaHidden;
     const ubicacion = document.getElementById('ubicacion').value.trim();
     const nombre = document.getElementById('nombre').value.trim();
     const matricula = document.getElementById('matricula').value.trim();
